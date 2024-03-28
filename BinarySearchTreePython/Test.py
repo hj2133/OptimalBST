@@ -90,7 +90,7 @@ def main():
         tree.insert(103)
         tree.delete(103)
 
-        # Test Search(data)
+        # Test searchItem(data)
         tree.search_item(35)
         tree.search_item(9) # should not found
 
