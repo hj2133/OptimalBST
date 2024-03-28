@@ -12,6 +12,8 @@
 # 
 # [5] Lectures - Week 6: BinaryTree.java, COMP 251, Opeyemi Adesina
 #
+# [6] mycodeschool. "Delete a node from Binary Search Tree." YouTube, May 1, 2014. [Video]. https://www.youtube.com/watch?v=gcULXE7ViZw
+#
 # This file was translated from Java into Python with ChatGPT. 
 #
 # Read through Python code and tested it with test cases in Test.py - passed all tests.
@@ -39,7 +41,7 @@ class BinarySearchTree:
                 print("ignored duplicate")
                 return
 
-        def delete(self, current_node, data):
+        def delete(self, current_node, data): # [6]
             if current_node.left is None and current_node.right is None:
                 if data == current_node.data:
                     current_node = None
