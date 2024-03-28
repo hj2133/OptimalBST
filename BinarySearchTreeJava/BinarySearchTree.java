@@ -4,21 +4,21 @@
  * References
  * 
  * [1] 	"Java comparing generic types." StackOverflow.com, answered by Sotirios Delimanolis on Dec. 27, 2013, edited on Mar. 19, 2019. 
- *      https://stackoverflow.com/questions/20793082/java-comparing-generic-types
+ * 	https://stackoverflow.com/questions/20793082/java-comparing-generic-types
  * 
  * [2] 	Blue Tree Code. "Algorithms: Binary Search Tree - Recursive Search and Insert." YouTube, Jul. 17, 2019. [Video].
- *	    https://www.youtube.com/watch?v=KNsg2qbOrjg
+ *	https://www.youtube.com/watch?v=KNsg2qbOrjg
  * 
  * [3] 	NeetCode. "Iterative & Recursive - Binary Tree Inorder Traversal - Leetcode 94 - Python." YouTube, Mar. 12, 2022. [Video].
- *	    https://www.youtube.com/watch?v=g_S5WuasWUE
+ *	https://www.youtube.com/watch?v=g_S5WuasWUE
  * 
  * [4] 	FavTutor. "Find Median of BST | Binary Search Tree | FavTutor." YouTube, Feb 18, 2022. [Video].
- *	    https://www.youtube.com/watch?v=MSPAezfDO9I
+ *	https://www.youtube.com/watch?v=MSPAezfDO9I
  * 
  * [5] 	Adesina, Opeyemi. "Lectures - Week 6: BinaryTree.java." Blackboard, COMP 251, June 2023. 
  * 
  * [6] 	mycodeschool. "Delete a node from Binary Search Tree." YouTube, May 1, 2014. [Video].
- *	    https://www.youtube.com/watch?v=gcULXE7ViZw
+ *	https://www.youtube.com/watch?v=gcULXE7ViZw
  *
  **/
 
