@@ -88,11 +88,13 @@ def main():
 
         # Test delete(data)
         tree.insert(103)
+        print(tree.list_pre_order())  # [5, 1, 3, 4, 35, 7, 100, 102, 101, 103]
         tree.delete(103)
+        print(tree.list_pre_order())  # [5, 1, 3, 4, 35, 7, 100, 102, 101]
 
         # Test searchItem(data)
         tree.search_item(35)
-        tree.search_item(9) # should not found
+        tree.search_item(9) # should not be found
 
         # Test size()
         print(tree.size())  # 9
