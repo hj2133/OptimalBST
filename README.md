@@ -5,4 +5,4 @@ Optimal Binary Search Trees (Optimal BSTs) are binary search tree data structure
 The Optimal BST assigns a probability that represents the likelihood of the user searching for the item to each node 
 and arranges itself such that the most searched item is at the top of the binary search tree.
 
-The main project files in contained in the folder named "".
+The main project files in contained in the folder named "OptimalBST_WithGUI".
