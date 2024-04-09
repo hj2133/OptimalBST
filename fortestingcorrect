@@ -1,0 +1,26 @@
+def assert_float_matrices_almost_equal(actual, expected, tol=1e-9):
+    assert len(actual) == len(expected) and len(actual[0]) == len(expected[0]), "Matrix sizes do not match."
+    for i, row in enumerate(actual):
+        for j, val in enumerate(row):
+            assert abs(val - expected[i][j]) < tol, f"Matrix values differ at ({i},{j}): Expected {expected[i][j]}, but got {val}."
+
+def assert_int_matrices_equal(actual, expected):
+    assert len(actual) == len(expected) and len(actual[0]) == len(expected[0]), "Matrix sizes do not match."
+    for i, row in enumerate(actual):
+        for j, val in enumerate(row):
+            assert val == expected[i][j], f"Matrix values differ at ({i},{j}): Expected {expected[i][j]}, but got {val}."
+
+def test_optimal_bst():
+    keys = [35, 100, 120, 131]
+    probabilities = [0.1, 0.2, 0.4, 0.3]
+    expected_cost = [
+
+    ]
+    expected_root = [
+    ]
+    actual_cost, actual_root = optimal_bst(keys, probabilities, len(keys))
+    assert_float_matrices_almost_equal(actual_cost, expected_cost)
+    assert_int_matrices_equal(actual_root, expected_root)
+    print("All tests passed!")
+
+test_optimal_bst()
