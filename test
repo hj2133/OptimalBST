@@ -1,0 +1,36 @@
+def optimal_bst(keys, p, n):
+    cost = [[0 for _ in range(n)] for _ in range(n)]
+    sum_p = [[0 for _ in range(n)] for _ in range(n)]
+    root = [[0 for _ in range(n)] for _ in range(n)]
+
+    for i in range(n):
+        cost[i][i] = p[i]
+        sum_p[i][i] = p[i]
+        root[i][i] = i
+
+    for L in range(2, n+1):
+        for i in range(n-L+1):
+            j = i+L-1
+            cost[i][j] = float('inf')
+            sum_p[i][j] = sum_p[i][j-1] + p[j]
+            for r in range(i, j+1):
+                c = (cost[i][r-1] if r > i else 0) + (cost[r+1][j] if r < j else 0) + sum_p[i][j]
+                if c < cost[i][j]:
+                    cost[i][j] = c
+                    root[i][j] = r
+
+    return cost, sum_p, root
+
+def print_matrix(mat, label):
+    print(label)
+    for row in mat:
+        print(" ".join(f"{v:.2f}" if isinstance(v, float) else str(v) for v in row))
+
+keys = [35, 100, 120, 131]
+p = [0.1, 0.2, 0.4, 0.3]
+n = len(keys)
+
+cost, sum_p, root = optimal_bst(keys, p, n)
+print_matrix(cost, "Cost Matrix:")
+print_matrix(sum_p, "Sum of Probabilities Matrix:")
+print_matrix(root, "Root Matrix:")
