@@ -7,5 +7,4 @@ It does this by assigning a probability that represents the likelihood of the us
 and arranging itself such that the most searched items are at the top of the binary search tree.
 
 The project files contain a program that finds and draws the optimal bst, given a list of probabilities that correspond to the list in order.
-
 The main project files is contained in the folder named "OptimalBST_WithGUI".
