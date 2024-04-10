@@ -6,4 +6,4 @@ There are some items that are more likely to be searched than others. The Optima
 It does this by assigning a probability that represents the likelihood of the user searching for the item to each node 
 and arranging itself such that the most searched items are at the top of the binary search tree.
 
-The main project files in contained in the folder named "OptimalBST_WithGUI".
+The main project files is contained in the folder named "OptimalBST_WithGUI".
