@@ -54,11 +54,21 @@ def main():
       tree.insert(136)
 
       # Create Probability List
-      p = []
+      p = [0.01, 0.02, 0.03, 0.04, 0.05,
+           0.01, 0.02, 0.03, 0.04, 0.05,
+           0.01, 0.02, 0.03, 0.04, 0.05,
+           0.01, 0.02, 0.03, 0.04, 0.05,
+           0.01, 0.02, 0.03, 0.04, 0.05,
+           0.01, 0.02, 0.03, 0.04, 0.05,
+           0.10]
 
-      for i in range(0, tree.size()):
-          p.append(1/tree.size())
+      # for i in range(0, tree.size()):
+        # p.append(1/tree.size())
+    
+      print("Sum of probabilities is:")
+      print(round(sum(p), 2))
 
+      print("\n")
       print("The tree (in order) has these probabilities:")
       print(tree.list_in_order())
       print(p) # check contents of probability list
@@ -68,7 +78,7 @@ def main():
       tree = tree.optimal_bst_create(tree.list_in_order(), p, tree.size())
       
       # Draw Optimal BST
-      tree.gui(p)
+      tree.gui()
 
 # Run tests
 main()
