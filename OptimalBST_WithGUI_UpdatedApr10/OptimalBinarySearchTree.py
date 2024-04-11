@@ -1,7 +1,7 @@
 ###############################################################################################################################
 # 
-# Updated on April 10, 2024 at 12:21 pm - added probabilities next to each node
-# 
+# Updated on April 10, 2024 at 10:23 pm - added probability text, sum of probabilities catch and big tree drawing catch
+#
 # References
 # 
 # [1] https://stackoverflow.com/questions/20793082/java-comparing-generic-types
@@ -144,7 +144,35 @@ class OptimalBinarySearchTree:
             return self.left.smallest() if self.left else self.data
 
         # Traverse tree, draw each node and its edges
-        def drawNodeAndEdges(self, current_node, p, keys, canvas, x0, y0, x1, y1):
+        def drawNodeAndEdges(self, current_node, canvas, x0, y0, x1, y1):
+            if not current_node.left and not current_node.right: # Draw node with no edges
+                node = canvas.create_oval(x0, y0, x1, y1, fill = '#CCC', outline = 'grey')
+                data = canvas.create_text(x0 + 25, y0 + 21, text = current_node.data, font = ('Georgia', 14))
+                return
+            elif current_node.left and not current_node.right: # Draw node with left edge
+                edgeLeft = canvas.create_line(x0 + 7, y1 - 10, x0 - (2 ** current_node.height()) * 12.5, y1 + 65, width = 3, fill = '#666')
+                node = canvas.create_oval(x0, y0, x1, y1, fill = '#CCC', outline = 'grey')
+                data = canvas.create_text(x0 + 25, y0 + 21, text = current_node.data, font = ('Georgia', 14))
+                # traverse to the left
+                self.drawNodeAndEdges(current_node.left, canvas, x0 - (2 ** current_node.height()) * 13.3, y0 + 90, x1 - (2 ** current_node.height()) * 13.3, y1 + 90) # traverse to left child
+            elif not current_node.left and current_node.right: # Draw node with right edge
+                edgeRight = canvas.create_line(x1 - 7, y1 - 10, x1 + (2 ** current_node.height()) * 12.5, y1 + 65, width = 3, fill = '#666')
+                node = canvas.create_oval(x0, y0, x1, y1, fill = '#CCC', outline = 'grey')
+                data = canvas.create_text(x0 + 25, y0 + 21, text = current_node.data, font = ('Georgia', 14))
+                # traverse to the right
+                self.drawNodeAndEdges(current_node.right, canvas, x0 + (2 ** current_node.height()) * 13.3, y0 + 90, x1 + (2 ** current_node.height()) * 13.3, y1 + 90) # traverse to right child
+            else: # Draw node with both left and right edges
+                # Draw edge then traverse to children
+                edgeLeft = canvas.create_line(x0 + 7, y1 - 10, x0 - (2 ** current_node.height()) * 12.5, y1 + 65, width = 3, fill = '#666')
+                self.drawNodeAndEdges(current_node.left, canvas, x0 - (2 ** current_node.height()) * 13.3, y0 + 90, x1 - (2 ** current_node.height()) * 13.3, y1 + 90) # traverse to left child
+                edgeRight = canvas.create_line(x1 - 7, y1 - 10, x1 + (2 ** current_node.height()) * 12.5, y1 + 65, width = 3, fill = '#666')
+                self.drawNodeAndEdges(current_node.right, canvas, x0 + (2 ** current_node.height()) * 13.3, y0 + 90, x1 + (2 ** current_node.height()) * 13.3, y1 + 90) # traverse to right child
+                # draw node
+                node = canvas.create_oval(x0, y0, x1, y1, fill = '#CCC', outline = 'grey')
+                data = canvas.create_text(x0 + 25, y0 + 21, text = current_node.data, font = ('Georgia', 14))
+
+        # Traverse tree, draw each node, its edges and probabilities
+        def drawNodeAndEdgesProb(self, current_node, p, keys, canvas, x0, y0, x1, y1):
             if not current_node.left and not current_node.right: # Draw node with no edges
                 node = canvas.create_oval(x0, y0, x1, y1, fill = '#CCC', outline = 'grey')
                 data = canvas.create_text(x0 + 25, y0 + 21, text = current_node.data, font = ('Georgia', 14))
@@ -160,7 +188,7 @@ class OptimalBinarySearchTree:
                 probIndex = keys.index(current_node.data)
                 prob = canvas.create_text(x1 - 25, y1 + 7, text = "{:.2f}".format(p[probIndex]), font = ('Georgia', 11))
                 # traverse to the left
-                self.drawNodeAndEdges(current_node.left, p, keys, canvas, x0 - (2 ** current_node.height()) * 13.3, y0 + 90, x1 - (2 ** current_node.height()) * 13.3, y1 + 90) # traverse to left child
+                self.drawNodeAndEdgesProb(current_node.left, p, keys, canvas, x0 - (2 ** current_node.height()) * 13.3, y0 + 90, x1 - (2 ** current_node.height()) * 13.3, y1 + 90) # traverse to left child
             elif not current_node.left and current_node.right: # Draw node with right edge
                 edgeRight = canvas.create_line(x1 - 7, y1 - 10, x1 + (2 ** current_node.height()) * 12.5, y1 + 65, width = 3, fill = '#666')
                 node = canvas.create_oval(x0, y0, x1, y1, fill = '#CCC', outline = 'grey')
@@ -169,13 +197,13 @@ class OptimalBinarySearchTree:
                 probIndex = keys.index(current_node.data)
                 prob = canvas.create_text(x1 - 25, y1 + 7, text = "{:.2f}".format(p[probIndex]), font = ('Georgia', 11))
                 # traverse to the right
-                self.drawNodeAndEdges(current_node.right, p, keys, canvas, x0 + (2 ** current_node.height()) * 13.3, y0 + 90, x1 + (2 ** current_node.height()) * 13.3, y1 + 90) # traverse to right child
+                self.drawNodeAndEdgesProb(current_node.right, p, keys, canvas, x0 + (2 ** current_node.height()) * 13.3, y0 + 90, x1 + (2 ** current_node.height()) * 13.3, y1 + 90) # traverse to right child
             else: # Draw node with both left and right edges
                 # Draw edge then traverse to children
                 edgeLeft = canvas.create_line(x0 + 7, y1 - 10, x0 - (2 ** current_node.height()) * 12.5, y1 + 65, width = 3, fill = '#666')
-                self.drawNodeAndEdges(current_node.left, p, keys, canvas, x0 - (2 ** current_node.height()) * 13.3, y0 + 90, x1 - (2 ** current_node.height()) * 13.3, y1 + 90) # traverse to left child
+                self.drawNodeAndEdgesProb(current_node.left, p, keys, canvas, x0 - (2 ** current_node.height()) * 13.3, y0 + 90, x1 - (2 ** current_node.height()) * 13.3, y1 + 90) # traverse to left child
                 edgeRight = canvas.create_line(x1 - 7, y1 - 10, x1 + (2 ** current_node.height()) * 12.5, y1 + 65, width = 3, fill = '#666')
-                self.drawNodeAndEdges(current_node.right, p, keys, canvas, x0 + (2 ** current_node.height()) * 13.3, y0 + 90, x1 + (2 ** current_node.height()) * 13.3, y1 + 90) # traverse to right child
+                self.drawNodeAndEdgesProb(current_node.right, p, keys, canvas, x0 + (2 ** current_node.height()) * 13.3, y0 + 90, x1 + (2 ** current_node.height()) * 13.3, y1 + 90) # traverse to right child
                 # draw node
                 node = canvas.create_oval(x0, y0, x1, y1, fill = '#CCC', outline = 'grey')
                 data = canvas.create_text(x0 + 25, y0 + 21, text = current_node.data, font = ('Georgia', 14))
@@ -311,54 +339,63 @@ class OptimalBinarySearchTree:
     # Creates the optimal bst from existing binary search tree; 
     # Used stack method in Reference [6] to read from root matrix and create tree
     def optimal_bst_create(self, keys, p, n):
-        if self.is_empty():
+        if round(sum(p), 2) != 1: # check probability sum is 1 (up to 2 decimals)
+            print("please make sure the probabilities add up to 1")
             return self
         else:
-            R = self.optimal_bst(keys, p, n)
-            optimal_bst_build = OptimalBinarySearchTree(keys[R[1][n] - 1])
-            # print(R[1][n]) - internal debug line
-            # print(keys[R[1][n]]) - internal debug line
-            stack = []
-            stack.append([1, n])
-            while(stack):
-                [i, j] = stack.pop()
-                l = R[i][j]
-                # print(R[i][j]) - internal debug line
-                if l < j:
-                    optimal_bst_build.insert(keys[R[l + 1][j] - 1])
-                    stack.append([l + 1, j])
-                if i < l:
-                    optimal_bst_build.insert(keys[R[i][l - 1] - 1])
-                    stack.append([i, l - 1])
-        return optimal_bst_build
+            if self.is_empty():
+                return self
+            else:
+                R = self.optimal_bst(keys, p, n)
+                optimal_bst_build = OptimalBinarySearchTree(keys[R[1][n] - 1])
+                # print(R[1][n]) - internal debug line
+                # print(keys[R[1][n]]) - internal debug line
+                stack = []
+                stack.append([1, n])
+                while(stack):
+                    [i, j] = stack.pop()
+                    l = R[i][j]
+                    # print(R[i][j]) - internal debug line
+                    if l < j:
+                        optimal_bst_build.insert(keys[R[l + 1][j] - 1])
+                        stack.append([l + 1, j])
+                    if i < l:
+                        optimal_bst_build.insert(keys[R[i][l - 1] - 1])
+                        stack.append([i, l - 1])
+            return optimal_bst_build
 
     # Finds the minimal cost, the cost matrix and returns the root matrix
     def optimal_bst(self, keys, p, n):
-        cost = [[0 for _ in range(n+1)] for _ in range(n+2)]
-        root = [[0 for _ in range(n+1)] for _ in range(n+2)]
-        for i in range(1, n+1):
-            cost[i][i] = p[i-1]
-            root[i][i] = i
-        for L in range(2, n+1):
-            for i in range(1, n-L+2):
-                j = i+L-1
-                cost[i][j] = float('inf')
-                sum_p_ij = sum(p[i-1:j])  
-                for r in range(i, j+1):
-                    c = ((cost[i][r-1] if r > i else 0) + (cost[r+1][j] if r < j else 0) + sum_p_ij)
-                    if c < cost[i][j]:
-                        cost[i][j] = c
-                        root[i][j] = r
-        cost[n+1] = [0 for _ in range(n+1)]
-        root[n+1] = [0 for _ in range(n+1)]
-        cost_print = cost[1:] # removes top row of 0's
-        root_print = root[1:] # removes top row of 0's
-        self.print_matrix(cost_print, "Cost Matrix:")
-        print("\n")
-        self.print_matrix(root_print, "Root Matrix:")
-        print("\n")
-        print("The minimal cost is: " + str(cost_print[0][n]))
-        return root
+        if round(sum(p), 2) != 1: # check probability sum is 1 (up to 2 decimals)
+            print("please make sure the probabilities add up to 1")
+            return
+        else: 
+            cost = [[0 for _ in range(n+1)] for _ in range(n+2)]
+            root = [[0 for _ in range(n+1)] for _ in range(n+2)]
+            for i in range(1, n+1):
+                cost[i][i] = p[i-1]
+                root[i][i] = i
+            for L in range(2, n+1):
+                for i in range(1, n-L+2):
+                    j = i+L-1
+                    cost[i][j] = float('inf')
+                    sum_p_ij = sum(p[i-1:j])  
+                    for r in range(i, j+1):
+                        c = ((cost[i][r-1] if r > i else 0) + (cost[r+1][j] if r < j else 0) + sum_p_ij)
+                        if c < cost[i][j]:
+                            cost[i][j] = c
+                            root[i][j] = r
+            cost[n+1] = [0 for _ in range(n+1)]
+            root[n+1] = [0 for _ in range(n+1)]
+            # print(cost[1][n]) - check precision (correct); value shouldn't be rounded when computing cost and finding roots        
+            cost_print = cost[1:] # removes top row of 0's
+            root_print = root[1:] # removes top row of 0's
+            self.print_matrix(cost_print, "Cost Matrix:")
+            print("\n")
+            self.print_matrix(root_print, "Root Matrix:")
+            print("\n")
+            print("The minimal cost is: " + str(cost_print[0][n]))
+            return root
 
     # Prints a matrix
     def print_matrix(self, mat, label):
@@ -368,20 +405,51 @@ class OptimalBinarySearchTree:
 
   ############################################## GUI ##############################################
 
-    # Draws a Binary Tree
-    def gui(self, p):
-        # Setup GUI
-        root = tk.Tk()
-        root.geometry('1500x550')
-        root.title('Optimal BST Solution')
-        # Setup Tree Canvas and Optimal BST Solution Box
-        treeCanvasAndSolution = tk.Canvas(root, width = 1500, height = 550, bg = 'white')
-        treeCanvasAndSolution.pack()
-        treeCanvasAndSolution.create_rectangle((0, 0, 200, 550), fill = '#99CCCC', outline = '#99CCCC')
-        treeCanvasAndSolution.create_rectangle((1300, 0, 1500, 550), fill = '#99CCCC', outline = '#99CCCC')
-        treeCanvasAndSolution.create_rectangle((200, 0, 1300, 550), fill = 'white', outline = 'white')
-        # Draw BST Tree
-        if not self.is_empty():
-            self.root.drawNodeAndEdges(self.root, p, self.list_in_order(), treeCanvasAndSolution, 725, 50, 775, 100)
-        # Run GUI
-        root.mainloop()
+    # Draws an Optimal BST (if the probability sum is 1; else, it draws a bst)
+    def guiOptimal(self, p):
+        # Screen Size Limit - Maximum Tree with 5 Levels
+        if self.height() + 1 > 5: # cannot fit on screen
+           print("tree cannot fit on screen")
+           return
+        else:
+            # Setup GUI
+            root = tk.Tk()
+            root.geometry('1500x550')
+            root.title('Optimal BST Solution')
+            # Setup Tree Canvas and Optimal BST Solution Box
+            treeCanvasAndSolution = tk.Canvas(root, width = 1500, height = 550, bg = 'white')
+            treeCanvasAndSolution.pack()
+            treeCanvasAndSolution.create_rectangle((0, 0, 200, 550), fill = '#99CCCC', outline = '#99CCCC')
+            treeCanvasAndSolution.create_rectangle((1300, 0, 1500, 550), fill = '#99CCCC', outline = '#99CCCC')
+            treeCanvasAndSolution.create_rectangle((200, 0, 1300, 550), fill = 'white', outline = 'white')
+            # Draw BST Tree
+            if not self.is_empty():
+                if round(sum(p), 2) != 1: # draw bst
+                    self.root.drawNodeAndEdges(self.root, treeCanvasAndSolution, 725, 50, 775, 100)
+                else: # draw optimal bst
+                    self.root.drawNodeAndEdgesProb(self.root, p, self.list_in_order(), treeCanvasAndSolution, 725, 50, 775, 100)
+            # Run GUI
+            root.mainloop()
+
+    # Draws a BST
+    def gui(self):
+        # Screen Size Limit - Maximum Tree with 5 Levels
+        if self.height() + 1 > 5: # cannot fit on screen
+            print("tree cannot fit on screen")
+            return
+        else:
+            # Setup GUI
+            root = tk.Tk()
+            root.geometry('1500x550')
+            root.title('Optimal BST Solution')
+            # Setup Tree Canvas and Optimal BST Solution Box
+            treeCanvasAndSolution = tk.Canvas(root, width = 1500, height = 550, bg = 'white')
+            treeCanvasAndSolution.pack()
+            treeCanvasAndSolution.create_rectangle((0, 0, 200, 550), fill = '#99CCCC', outline = '#99CCCC')
+            treeCanvasAndSolution.create_rectangle((1300, 0, 1500, 550), fill = '#99CCCC', outline = '#99CCCC')
+            treeCanvasAndSolution.create_rectangle((200, 0, 1300, 550), fill = 'white', outline = 'white')
+            # Draw BST Tree
+            if not self.is_empty():
+                self.root.drawNodeAndEdges(self.root, treeCanvasAndSolution, 725, 50, 775, 100)
+            # Run GUI
+            root.mainloop()
