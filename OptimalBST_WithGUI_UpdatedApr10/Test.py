@@ -39,28 +39,27 @@ def main():
       tree.insert(1)
       tree.insert(7)
       tree.insert(11)
-      tree.insert(14)
+      # tree.insert(14)
       tree.insert(19)
       tree.insert(21)
-      tree.insert(29)
+      # tree.insert(29)
       tree.insert(32)
       tree.insert(47)
-      tree.insert(65)
+      # tree.insert(65)
       tree.insert(79)
-      tree.insert(93)
+      # tree.insert(93)
       tree.insert(104)
       tree.insert(117)
       tree.insert(124)
       tree.insert(136)
 
       # Create Probability List
-      p = [0.01, 0.02, 0.03, 0.04, 0.05,
-           0.01, 0.02, 0.03, 0.04, 0.05,
-           0.01, 0.02, 0.03, 0.04, 0.05,
-           0.01, 0.02, 0.03, 0.04, 0.05,
-           0.01, 0.02, 0.03, 0.04, 0.05,
-           0.01, 0.02, 0.03, 0.04, 0.05,
-           0.10]
+      p = [0.02, 0.05, 0.03, 0.04, 0.05,
+           0.01, 0.05, 0.03, 0.04, 0.05,
+           0.01, 0.02, 0.07, 0.04, 0.05,
+           0.03, 0.04, 0.03, 0.04, 0.05,
+           0.03, 0.03, 0.03, 0.04, 0.05,
+           0.05, 0.02]
 
       # for i in range(0, tree.size()):
         # p.append(1/tree.size())
@@ -78,7 +77,7 @@ def main():
       tree = tree.optimal_bst_create(tree.list_in_order(), p, tree.size())
       
       # Draw Optimal BST
-      tree.gui()
+      tree.guiOptimal(p)
 
 # Run tests
 main()
